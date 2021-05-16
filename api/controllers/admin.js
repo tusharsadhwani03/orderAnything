@@ -74,10 +74,67 @@
 
 /* View all orders */
     async function view_orders(req,res){
-        const orderList = await orders.find({});
-        
+        try {
+            const orderList = await orders.find({});   
+            if(orderList.length < 1)
+            {
+                res.send("no orders yet");
+            } 
+            res.send(`orders : \n ${orderList}`);
+        } 
+        catch (error) {
+            console.log(error);
+            res.send("Unknown Error! ");
+        }
     }
 
+/* View dvboys */
+async function view_dvboys(req,res){
+    try {
+        const dvboysList = await dvboys.find({});   
+        if(dvboysList.length < 1)
+        {
+            res.send("U have no delievery boys to deliever . Recruit a delievery boy or deliever yourself.");
+        } 
+        res.send(`dvboys list : \n ${dvboysList}`);
+    } 
+    catch (error) {
+        console.log(error);
+        res.send("Unknown Error! ");
+    }
+}
 
+/* view all orders and dvboys */
+async function view_all(req,res){
+    try {
+        const dvboysList = await dvboys.find({}); 
+        const orderList = await orders.find({});
+        res.send(`orders : \n ${orderList} \n dvboys : ${dvboysList}`);
+    }
+    catch (error) {
+        console.log(error);
+        res.send("error occurs! Try Again.")
+    }
+}
 
-module.exports = {adminSignup, adminLogin};
+/* assign dvboy */
+async function assign_dvboy(req,res){
+    try {
+        const order = await orders.find({orderId : req.body.orderId});
+        const dvboy = await dvboys.find({email : req.body.dvboyEmail});
+        if(order[0].dvboyId != undefined)
+        {
+            res.send("dvboy already assigned for this order.");
+        }
+        order[0].dvboyId = dvboy[0]._id;
+        order[0].save();
+        res.send("order assigned");
+    }
+    catch (error) {
+        console.log(error);
+        res.send("Error!");
+    }
+
+}
+
+module.exports = {adminSignup, adminLogin , view_orders, view_dvboys , view_all , assign_dvboy};
