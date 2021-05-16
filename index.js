@@ -6,7 +6,7 @@
     const dvboyroutes = require('./api/routes/dvboy');
     const userroutes = require('./api/routes/user');
     const orderroutes = require('./api/routes/order');
-    const dbkey = require('./keys').dbkey;
+    const dbkey = require('./keys/keys').dbkey;
 
 /* Init app */
     const app = express();

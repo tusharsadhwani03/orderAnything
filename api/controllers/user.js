@@ -4,7 +4,28 @@ const users = require('../models/user');
 const items = require('../models/items');
 const orders = require('../models/orders');
 const jwt = require('jsonwebtoken');
-const jwt_key = require('../../keys/keys').secretkey;
+const jwt_key = require('../../keys/keys').secretkey_user;
+
+/* Pickup location function */
+    async function pickup_locations(cart){
+        console.log(cart);
+        const locations = [];
+        no_of_items = cart.length;
+        console.log(no_of_items);
+        for(i=0 ; i<no_of_items ; i++)
+        {
+            console.log(cart[i].itemName);
+            var item = await items.find({Name : cart[i].itemName}) ;
+            var addresses =  item[0].addresses;
+            var total_addresses = addresses.length;
+            const random_index = Math.floor(Math.random()*total_addresses);
+            locations.push({
+                "itemName" : cart[i].itemName,
+                "location" : addresses[random_index]
+            })   
+        }
+        return locations;
+    }
 
 /* Login controller */    
 async function userLogin(req,res){
@@ -144,10 +165,13 @@ async function userSignup(req,res){
         }
         else{
             // else , place order and empty the cart
+
+            const locations = await pickup_locations(user[0].cart);
             const newOrder = new orders({
                 orderId : new mongoose.Types.ObjectId(),
                 customerID : user[0]._id,
                 itemList : user[0].cart,
+                pickupLocations : locations
             });
             await newOrder.save();
             user[0].cart = [];
