@@ -96,13 +96,38 @@ async function dvboy_orders(req,res){
 /* Update order stages */
 async function update_order(req,res){
     try {
-        const orderList = await orders.find({orderId : req.body.orderId});
+        const orderList = await orders.find({orderId : req.body.orderId}); 
+        var taskCreated = req.body.taskCreated;
+        var reachedStore = req.body.reachedStore;
+        var itemsPicked = req.body.itemsPicked;
+        var enroute = req.body.enroute;
+        var status = req.body.status;
+        if(req.body.taskCreated == null)
+        {
+            taskCreated = orderList[0].orderStages.taskCreated;
+        }
+        if(req.body.reachedStore == null)
+        {
+           reachedStore = orderList[0].orderStages.reachedStore;
+        }
+        if(req.body.itemsPicked == null)
+        {
+            itemsPicked = orderList[0].orderStages.itemsPicked;
+        }
+        if(req.body.status == null)
+        {
+            status = orderList[0].orderStages.status;
+        }
+        if(req.body.enroute == null)
+        {
+            enroute = orderList[0].orderStages.enroute;
+        }
         orderList[0].orderStages = {
-            "Task Created" : req.body.taskCreated,
-            "Reached Store" : req.body.reachedStore,
-            "itemsPicked" : req.body.itemsPicked,
-            "enroute" : req.body.enroute,
-            "delievery status" : req.body.status
+            "taskCreated" : taskCreated,
+            "reachedStore" : reachedStore,
+            "itemsPicked" : itemsPicked,
+            "enroute" : enroute,
+            "status" : status
         };
         orderList[0].save();
         res.send("updated status!");
