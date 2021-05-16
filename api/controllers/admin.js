@@ -13,7 +13,7 @@
     // if email not registered
     if(admin.length < 1)
     {  
-        res.send("Auth failed !");
+        res.json({"message" : "Auth failed !"});
     }
     else
     {   // if registered , check for correct password
@@ -29,12 +29,12 @@
         {
             expiresIn : 1*1*60*60, 
         }); 
-        res.send(`Authentication successful . \n Your token is : ${token}`);
+        res.json({"message" : `Authentication successful . \n Your token is : ${token}`});
         }
         else
         {
             // if password doesn't match
-            res.send("Auth failed !");
+            res.json({"message" : "Auth failed !"});
         }
     }    
     }
@@ -42,7 +42,7 @@
     {
         // any other error
         console.log(error);
-        res.send("Auth failed !");       
+        res.json({"message" : "Auth failed !"});       
     } 
     }
 
@@ -53,7 +53,7 @@
      const admin = await admins.find({email : req.body.email});
      if(admin.length >= 1)
      {
-         res.send("Email already Exists !");
+        res.json({"message" : "Email already exists!"});
      }
      else{
          const newAdmin = await new admins({
@@ -62,13 +62,13 @@
             password : req.body.password,    
          });
          await newAdmin.save();
-         res.send(`welcome! New Admin created -> ${newAdmin} . Please login to seeorders.`).json();
+         res.json({"message" : `welcome! New Admin created -> ${newAdmin} . Please login to seeorders.`});
      }
     }
      catch (error)
      {
         console.log(error);
-        res.send("error! . Try again later");
+        res.json({"message" : "Error! Try again later"});
      }
     }
 
@@ -78,13 +78,13 @@
             const orderList = await orders.find({});   
             if(orderList.length < 1)
             {
-                res.send("no orders yet");
+                res.json({"message" : "No orders yet!"});
             } 
             res.send(`orders : \n ${orderList}`);
         } 
         catch (error) {
             console.log(error);
-            res.send("Unknown Error! ");
+            res.json({"message" : "Unknown error !"});
         }
     }
 
@@ -94,13 +94,13 @@ async function view_dvboys(req,res){
         const dvboysList = await dvboys.find({});   
         if(dvboysList.length < 1)
         {
-            res.send("U have no delievery boys to deliever . Recruit a delievery boy or deliever yourself.");
+            res.send({ "message" : "U have no delievery boys to deliever . Recruit a delievery boy or deliever yourself."});
         } 
-        res.send(`dvboys list : \n ${dvboysList}`);
+        res.json(dvboysList);
     } 
     catch (error) {
         console.log(error);
-        res.send("Unknown Error! ");
+        res.json({"message" : "unknown error !"});
     }
 }
 
@@ -109,11 +109,11 @@ async function view_all(req,res){
     try {
         const dvboysList = await dvboys.find({}); 
         const orderList = await orders.find({});
-        res.send(`orders : \n ${orderList} \n dvboys : ${dvboysList}`);
+        res.json({"orders" : orderList }, {"dvboys" : dvboysList});
     }
     catch (error) {
         console.log(error);
-        res.send("error occurs! Try Again.")
+        res.json({"message" : "unknown error !"});
     }
 }
 
@@ -124,15 +124,15 @@ async function assign_dvboy(req,res){
         const dvboy = await dvboys.find({email : req.body.dvboyEmail});
         if(order[0].dvboyId != undefined)
         {
-            res.send("dvboy already assigned for this order.");
+            res.json({"message" : "dvboy already assigned for this order."});
         }
         order[0].dvboyId = dvboy[0]._id;
         order[0].save();
-        res.send("order assigned");
+        res.json({"message" :  "order assigned"});
     }
     catch (error) {
         console.log(error);
-        res.send("Error!");
+        res.json({"message" : "Error!"});
     }
 
 }
