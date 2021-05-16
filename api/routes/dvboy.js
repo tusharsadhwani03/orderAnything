@@ -14,6 +14,6 @@ router.get('/myorders',authdvboy,dvBoyorders);
 
 router.post('/signup',dvboySignup);
 
-router.post('/update',authdvboy,updateOrder);
+router.put('/update',authdvboy,updateOrder);
 
 module.exports = router;

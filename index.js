@@ -5,7 +5,6 @@
     const adminroutes = require('./api/routes/admin');
     const dvboyroutes = require('./api/routes/dvboy');
     const userroutes = require('./api/routes/user');
-    const orderroutes = require('./api/routes/order');
     const dbkey = require('./keys/keys').dbkey;
 
 /* Init app */
@@ -20,7 +19,6 @@
         app.use('/admin',adminroutes);
         app.use('/user',userroutes);
         app.use('/dvboy',dvboyroutes);
-        // app.use('/order',orderroutes);
 
     // 3. CORS
         app.use((req, res, next) => {

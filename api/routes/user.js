@@ -37,8 +37,8 @@ const removeitem = userControls.remove_from_cart;
     // 3. placeorder
         router.post('/placeorder',authuser,placeorder);
 
-    // 4. remove item from cart
-        router.post('/removeitem',authuser,removeitem);
+/* handling delete requests */
+    router.delete('/removeitem',authuser,removeitem);
 
 /* Exporting the route */        
 module.exports = router;

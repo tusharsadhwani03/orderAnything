@@ -18,7 +18,7 @@ router.get('/dvboys',authadmin,viewdvboys);
 
 router.get('/viewall',authadmin,view_all);
 
-router.post('/assign',authadmin,assignDvboy);
+router.put('/assign',authadmin,assignDvboy);
 
 router.post('/signup',adminSignup);
 

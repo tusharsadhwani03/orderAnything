@@ -12,7 +12,7 @@ async function dvboyLogin(req,res){
     // if email not registered
     if(dvboy.length < 1)
     {  
-        res.send("Auth failed !");
+        res.send("Auth failed !").json();
     }
     else
     {   // if registered , check for correct password
@@ -29,12 +29,12 @@ async function dvboyLogin(req,res){
                 expiresIn : 1*1*60*60, 
             }
         ); 
-           res.send(`Authentication successful . \n Your token is : ${token}`);
+           res.send(`Authentication successful . \n Your token is : ${token}`).json();
         }
         else
         {
             // if password doesn't match
-            res.send("Auth failed !");
+            res.send("Auth failed !").json();
         }
     }    
     }
@@ -42,7 +42,7 @@ async function dvboyLogin(req,res){
     {
         // any other error
         console.log(error);
-        res.send("Auth failed !");       
+        res.send("Auth failed !").json();       
     } 
 
 }
@@ -54,7 +54,7 @@ async function dvboySignup(req,res){
         const dvboy = await dvboys.find({email : req.body.email});
         if(dvboy.length >= 1)
         {
-            res.send("Email already Exists !");
+            res.send("Email already Exists !").json();
         }
         else{
             const newDvboy = await new dvboys({
@@ -69,7 +69,7 @@ async function dvboySignup(req,res){
     catch (error)
     {
         console.log(error);
-        res.send("error! . Try again later");
+        res.send("error! . Try again later".json());
     }
 }
 
@@ -89,7 +89,7 @@ async function dvboy_orders(req,res){
     res.send(`orders to deliever  : ${JSON.stringify(relevant_order_data)}`);        
     } catch (error) {
         console.log(error);
-        res.send("Error");
+        res.send("Error").json();
     }
 }
 
@@ -130,11 +130,11 @@ async function update_order(req,res){
             "status" : status
         };
         orderList[0].save();
-        res.send("updated status!");
+        res.send("updated status!").json();
     }
     catch(error) {
         console.log(error);
-        res.send("Error");
+        res.send("Error").json();
     }
 
 }
