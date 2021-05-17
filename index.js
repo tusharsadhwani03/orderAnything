@@ -5,7 +5,7 @@
     const adminroutes = require('./api/routes/admin');
     const dvboyroutes = require('./api/routes/dvboy');
     const userroutes = require('./api/routes/user');
-    const dbkey = require('./keys/keys').dbkey;
+    const dbkey = process.env.dbkey;
 
 /* Init app */
     const app = express();

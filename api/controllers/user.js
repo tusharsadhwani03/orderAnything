@@ -4,15 +4,14 @@ const users = require('../models/user');
 const items = require('../models/items');
 const orders = require('../models/orders');
 const jwt = require('jsonwebtoken');
-const jwt_key = require('../../keys/keys').secretkey_user;
+const jwt_key = process.env.userkey;
 
 /* Pickup location function */
     async function pickup_locations(cart){
         console.log(cart);
         const locations = [];
-        no_of_items = cart.length;
-        console.log(no_of_items);
-        for(i=0 ; i<no_of_items ; i++)
+        var no_of_items = cart.length;
+        for( var i=0 ; i<no_of_items ; i++)
         {
             console.log(cart[i].itemName);
             var item = await items.find({Name : cart[i].itemName}) ;

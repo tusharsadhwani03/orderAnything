@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const dvboys = require('../models/dvboy');
 const orders = require('../models/orders');
 const jwt = require('jsonwebtoken');
-const jwt_key = require('../../keys/keys').secretkey_dvboy;
+const jwt_key = process.env.dvboykey;
 
 /* Login controller */    
 async function dvboyLogin(req,res){

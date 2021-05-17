@@ -1,8 +1,7 @@
 const jwt = require('jsonwebtoken');
-const secretkey = require('../../keys/keys');
-const adminkey = secretkey.secretkey_admin;
-const userkey = secretkey.secretkey_user;
-const dvboykey = secretkey.secretkey_dvboy;
+const adminkey = process.env.adminkey;
+const userkey = process.env.userkey;
+const dvboykey = process.env.dvboykey;
 
 async function authuser(req,res,next) {
     try {

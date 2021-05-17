@@ -23,7 +23,6 @@
         },
         pickupLocations : {
             type : Array,
-            ref : 'item'
         }
     });
 

@@ -4,7 +4,7 @@
     const orders = require('../models/orders');
     const dvboys = require('../models/dvboy');
     const jwt = require('jsonwebtoken');
-    const jwt_key = require('../../keys/keys').secretkey_admin;
+    const jwt_key = process.env.adminkey;
 
 /* Login controller function */    
     async function adminLogin(req,res,next){
